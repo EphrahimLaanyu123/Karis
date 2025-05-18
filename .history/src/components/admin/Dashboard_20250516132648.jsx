@@ -1,0 +1,71 @@
+// src/Dashboard.jsx
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const Dashboard = () => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [adminId, setAdminId] = useState(''); // You should ideally get this from auth context or localStorage
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/events', {
+        title,
+        description,
+        date,
+        adminId,
+      });
+
+      alert('Event created successfully!');
+      // Clear form
+      setTitle('');
+      setDescription('');
+      setDate('');
+    } catch (err) {
+      console.error('Error creating event:', err);
+      alert('Failed to create event');
+    }
+  };
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Welcome to your Dashboard Admin!</h1>
+      <p>This is a protected page for logged-in admins.</p>
+
+      <h2>Create New Event</h2>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 400 }}>
+        <input
+          type="text"
+          placeholder="Event Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="Event Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+          type="datetime-local"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Admin ID"
+          value={adminId}
+          onChange={(e) => setAdminId(e.target.value)}
+          required
+        />
+        <button type="submit">Create Event</button>
+      </form>
+    </div>
+  );
+};
+
+export default Dashboard;
