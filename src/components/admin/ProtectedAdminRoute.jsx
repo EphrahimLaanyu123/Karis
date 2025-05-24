@@ -1,10 +1,11 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedAdminRoute = ({ children }) => {
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  console.log(isAdmin)
 
-  return isAdmin ? children : <Navigate to="/" replace />;
+  return isAdmin ? <Outlet/> : <Navigate to="/" replace />;
 };
 
 export default ProtectedAdminRoute;

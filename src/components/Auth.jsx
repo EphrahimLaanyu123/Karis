@@ -48,7 +48,7 @@ const Auth = () => {
           if (authType === 'admin') {
             navigate('/admin/dashboard');
           } else {
-            navigate('/dashboard');
+            navigate('/home');
           }
       
         } catch (err) {
